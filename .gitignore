@@ -1,3 +1,17 @@
+.*
+!.gitkeep
+!.gitignore
+!.npmignore
+!.editorconfig
+!.eslintignore
+!.eslintrc
+!.travis.yml
+!.coveralls.yml
+!.istanbul.yml
+
+*.orig
+
+/backup
 # Logs
 logs
 *.log
@@ -59,3 +73,5 @@ typings/
 
 # next.js build output
 .next
+
+

@@ -1,0 +1,37 @@
+{
+  "name": "loopback-n1ql-mixin",
+  "version": "0.0.1",
+  "description": "A mixin to enable use n1ql(couchbase)",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Wiredcraft/loopback-n1ql-mixin"
+  },
+  "keywords": [
+    "loopback",
+    "strongloop",
+    "mixin",
+    "n1ql",
+    "couchbase"
+  ],
+  "author": "Ray <ray@wiredcraft.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Wiredcraft/loopback-n1ql-mixin/issues"
+  },
+  "homepage": "https://github.com/Wiredcraft/loopback-n1ql-mixin#readme",
+  "devDependencies": {
+    "eslint": "^5.15.3",
+    "loopback": "^3.22.0",
+    "loopback-connector": "^4.4.0",
+    "loopback-connector-couchbase5": "^0.0.2",
+    "loopback-datasource-juggler": "^3.23.0"
+  },
+  "dependencies": {
+    "couchbase": "^2.6.3",
+    "http-errors": "^1.7.2"
+  }
+}
