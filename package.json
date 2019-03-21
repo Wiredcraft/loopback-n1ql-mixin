@@ -4,7 +4,17 @@
   "description": "A mixin to enable use n1ql(couchbase)",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "test": "make test",
+    "test-cov": "make test-cov",
+    "test-coveralls": "make test-coveralls",
+    "start": "make start",
+    "start-dev": "make start-dev",
+    "start-staging": "make start-staging",
+    "commitmsg": "commitlint -e $GIT_PARAMS",
+    "version": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0 && git add CHANGELOG.md",
+    "precommit": "make lint",
+    "prepush": "make lint"
   },
   "repository": {
     "type": "git",
@@ -17,7 +27,14 @@
     "n1ql",
     "couchbase"
   ],
-  "author": "Ray <ray@wiredcraft.com>",
+  "author": {
+    "name": "Wiredcraft",
+    "email": "",
+    "url": "https://wiredcraft.com/"
+  },
+  "contributors": [
+    "Ray Wang"
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/Wiredcraft/loopback-n1ql-mixin/issues"
@@ -28,7 +45,10 @@
     "loopback": "^3.22.0",
     "loopback-connector": "^4.4.0",
     "loopback-connector-couchbase5": "^0.0.2",
-    "loopback-datasource-juggler": "^3.23.0"
+    "loopback-datasource-juggler": "^3.23.0",
+    "eslint-config-wcl-backend": "^0.3.0",
+    "@commitlint/cli": "^6.1.3",
+    "@commitlint/config-conventional": "^6.1.3"
   },
   "dependencies": {
     "couchbase": "^2.6.3",
