@@ -1,0 +1,23 @@
+sudo: required
+language: node_js
+cache:
+  yarn: true
+notifications:
+  email: false
+branches:
+  only:
+    - master
+node_js:
+  - "10"
+  - "8"
+  - "6"
+services:
+  - docker
+env:
+  global:
+    - COUCHBASE_USER="Administrator"
+    - COUCHBASE_PASS="password"
+before_script:
+  - ./dockers/up.sh
+script:
+  - make test-coveralls
