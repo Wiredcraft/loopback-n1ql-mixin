@@ -28,7 +28,6 @@ describe('N1ql test', () => {
   }, { mixins: { 'N1ql': true } });
   Book.app = app;
   before('Prepare', async() => {
-    await Book.boot();
     await Ds.autoupdate();
     await Book.create({ name: 'name', title: 'title', extra: { author: { name: 'foo' } } });
     await Book.create({ name: 'name2', title: 'title2', extra: { author: { name: 'bar' } } });
