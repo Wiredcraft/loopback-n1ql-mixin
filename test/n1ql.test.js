@@ -37,13 +37,27 @@ describe('N1ql test', () => {
   after('Clear', async() => {
     await Book.destroyAll();
   });
-  it('should support single eql query', async() => {
-    const books = await Book.query({ where: { name: 'name' } });
-    expect(books.total).to.be.eql(1);
+  describe('query method', () => {
+    it('should support single eql query', async() => {
+      const books = await Book.query({ where: { name: 'name' } });
+      expect(books.length).to.be.eql(1);
+    });
+
+    it('should support nested document query', async() => {
+      const books = await Book.query({ where: { 'extra.author.name': 'foo' } });
+      expect(books.length).to.be.eql(1);
+    });
   });
 
-  it('should support nested document query', async() => {
-    const books = await Book.query({ where: { 'extra.author.name': 'foo' } });
-    expect(books.total).to.be.eql(1);
+  describe('count method', () => {
+    it('should support single eql query', async() => {
+      const books = await Book.sum({ where: { name: 'name' } });
+      expect(books).to.be.eql(1);
+    });
+
+    it('should support nested document query', async() => {
+      const books = await Book.sum({ where: { 'extra.author.name': 'foo' } });
+      expect(books).to.be.eql(1);
+    });
   });
 });
