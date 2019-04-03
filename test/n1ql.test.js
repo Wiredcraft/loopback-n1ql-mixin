@@ -25,7 +25,7 @@ describe('N1ql test', () => {
     name: String, type: String,
     title: String, type: String,
     extra: Object, type: Object
-  }, { mixins: { 'N1ql': true } });
+  }, { mixins: { 'N1ql': true }, indexes: { name_index: { name: 1 } } });
   Book.app = app;
   before('Prepare', async() => {
     await Ds.autoupdate();
@@ -45,6 +45,15 @@ describe('N1ql test', () => {
     it('should support nested document query', async() => {
       const books = await Book.query({ where: { 'extra.author.name': 'foo' } });
       expect(books.length).to.be.eql(1);
+    });
+  });
+
+  describe('indexes support', () => {
+    it('should contains name index', async() => {
+      const indexes = (await Book.getConnector()
+        .manager()
+        .call('getIndexesAsync')).map(i => i.name);
+      expect(indexes).to.be.eql(['Book', 'name_index']);
     });
   });
 
