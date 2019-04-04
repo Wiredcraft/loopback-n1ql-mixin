@@ -6,7 +6,7 @@ const expect = require('chai').expect;
 const app = loopback();
 app.logger = console;
 const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
-describe('N1ql test', () => {
+describe('N1QL Array function array_contains test', () => {
   const Ds = app.dataSource(
     'couchbase5', {
       cluster: {
@@ -24,49 +24,40 @@ describe('N1ql test', () => {
   const Book = Ds.createModel('Book', {
     name: String, type: String,
     title: String, type: String,
-    extra: Object, type: Object
-  }, { mixins: { 'N1ql': true }, indexes: { name_index: { name: 1 } } });
+    tags: Array, type: Array
+  }, { mixins: { 'N1ql': true } });
   Book.app = app;
   before('Prepare', async() => {
     await Ds.autoupdate();
-    await Book.create({ name: 'name', title: 'title', extra: { author: { name: 'foo' } } });
-    await Book.create({ name: 'name2', title: 'title2', extra: { author: { name: 'bar' } } });
+    await Book.create({ name: 'name', title: 'title', tags: ['sci-fi', 'war'] });
+    await Book.create({ name: 'name2', title: 'title2', tags: [{ name: 'sci-fi' }, { name: 'war' }] });
     await wait(200);
   });
   after('Clear', async() => {
     await Book.destroyAll();
   });
   describe('query method', () => {
-    it('should support single eql query', async() => {
-      const books = await Book.query({ where: { name: 'name' } });
+    it('should support array_contains query', async() => {
+      const books = await Book.query({ where: { tags: { array_contains: 'sci-fi' } } });
       expect(books.length).to.be.eql(1);
       expect(books[0].name).to.be.eql('name');
     });
 
-    it('should support nested document query', async() => {
-      const books = await Book.query({ where: { 'extra.author.name': 'foo' } });
+    it('should support array_contains with document query', async() => {
+      const books = await Book.query({ where: { tags: { array_contains: { name: 'war' } } } });
       expect(books.length).to.be.eql(1);
-      expect(books[0].name).to.be.eql('name');
-    });
-  });
-
-  describe('indexes support', () => {
-    it('should contains name index', async() => {
-      const indexes = (await Book.getConnector()
-        .manager()
-        .call('getIndexesAsync')).map(i => i.name);
-      expect(indexes).to.be.eql(['Book', 'name_index']);
+      expect(books[0].name).to.be.eql('name2');
     });
   });
 
   describe('count method', () => {
-    it('should support single eql query', async() => {
-      const books = await Book.sum({ where: { name: 'name' } });
+    it('should support array_contains query', async() => {
+      const books = await Book.sum({ where: { tags: { array_contains: 'sci-fi' } } });
       expect(books).to.be.eql(1);
     });
 
     it('should support nested document query', async() => {
-      const books = await Book.sum({ where: { 'extra.author.name': 'foo' } });
+      const books = await Book.sum({ where: { tags: { array_contains: { name: 'war' } } } });
       expect(books).to.be.eql(1);
     });
   });
