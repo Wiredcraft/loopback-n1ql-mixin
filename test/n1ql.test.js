@@ -25,7 +25,10 @@ describe('N1ql test', () => {
     name: String, type: String,
     title: String, type: String,
     extra: Object, type: Object
-  }, { mixins: { 'N1ql': true }, indexes: { name_index: { name: 1 } } });
+  }, { mixins: { 'N1ql': true }, indexes:
+    { name_index: { 'name': 1 },
+      extra_author_index: { 'extra.author.name': 1 } } }
+  );
   Book.app = app;
   before('Prepare', async() => {
     await Ds.autoupdate();
@@ -36,6 +39,15 @@ describe('N1ql test', () => {
   after('Clear', async() => {
     await Book.destroyAll();
   });
+
+  describe('index', () => {
+    it('should contains name index', async() => {
+      const indexes = (await Book.getConnector()
+        .manager()
+        .call('getIndexesAsync')).map(i => i.name);
+      expect(indexes).to.be.eql(['Book', 'extra_author_index', 'name_index']);
+    });
+  });
   describe('query method', () => {
     it('should support single eql query', async() => {
       const books = await Book.query({ where: { name: 'name' } });
@@ -45,15 +57,6 @@ describe('N1ql test', () => {
     it('should support nested document query', async() => {
       const books = await Book.query({ where: { 'extra.author.name': 'foo' } });
       expect(books.length).to.be.eql(1);
-    });
-  });
-
-  describe('indexes support', () => {
-    it('should contains name index', async() => {
-      const indexes = (await Book.getConnector()
-        .manager()
-        .call('getIndexesAsync')).map(i => i.name);
-      expect(indexes).to.be.eql(['Book', 'name_index']);
     });
   });
 
