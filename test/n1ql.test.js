@@ -25,10 +25,12 @@ describe('N1ql test', () => {
     name: String, type: String,
     title: String, type: String,
     extra: Object, type: Object
-  }, { mixins: { 'N1ql': true } });
+  }, { mixins: { 'N1ql': true }, indexes:
+    { name_index: { 'name': 1 },
+      extra_author_index: { 'extra.author.name': 1 } } }
+  );
   Book.app = app;
   before('Prepare', async() => {
-    await Book.boot();
     await Ds.autoupdate();
     await Book.create({ name: 'name', title: 'title', extra: { author: { name: 'foo' } } });
     await Book.create({ name: 'name2', title: 'title2', extra: { author: { name: 'bar' } } });
@@ -36,6 +38,15 @@ describe('N1ql test', () => {
   });
   after('Clear', async() => {
     await Book.destroyAll();
+  });
+
+  describe('index', () => {
+    it('should contains name index', async() => {
+      const indexes = (await Book.getConnector()
+        .manager()
+        .call('getIndexesAsync')).map(i => i.name);
+      expect(indexes).to.be.eql(['Book', 'extra_author_index', 'name_index']);
+    });
   });
   describe('query method', () => {
     it('should support single eql query', async() => {

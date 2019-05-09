@@ -44,15 +44,16 @@
     "@commitlint/cli": "^6.1.3",
     "@commitlint/config-conventional": "^6.1.3",
     "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
     "coveralls": "^3.0.0",
     "eslint": "^5.15.3",
-    "nyc": "^13.1.0",
     "eslint-config-wcl-backend": "^0.3.0",
     "istanbul": "^1.1.0-alpha.1",
     "loopback": "^3.22.0",
     "loopback-connector": "^4.4.0",
     "loopback-datasource-juggler": "^3.23.0",
-    "mocha": "^4.0.1"
+    "mocha": "^4.0.1",
+    "nyc": "^13.1.0"
   },
   "dependencies": {
     "couchbase": "^2.6.3",

@@ -19,5 +19,12 @@ docker-compose run --rm --entrypoint=/opt/couchbase/bin/couchbase-cli couchbase 
 
 docker-compose run --rm --entrypoint=/opt/couchbase/bin/couchbase-cli couchbase \
   bucket-create -c couchbase:8091 -u $COUCHBASE_USER -p $COUCHBASE_PASS \
-  --bucket=test_ping --bucket-type=couchbase \
+  --bucket=test_index --bucket-type=couchbase \
   --bucket-ramsize=128 --bucket-replica=0 --enable-flush=1 --wait
+
+docker-compose run --rm --entrypoint=/opt/couchbase/bin/couchbase-cli couchbase \
+  user-manage -c couchbase:8091 -u $COUCHBASE_USER -p $COUCHBASE_PASS \
+  --set --rbac-username test --rbac-password testpass \
+ --rbac-name test --roles ro_admin \
+ --auth-domain local 
+  
