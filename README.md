@@ -108,10 +108,10 @@ SQL Inject | Safe *
 - Regexp: The CouchBase use Golang to implement the pattern matching.  [Supported Syntax](https://github.com/google/re2/wiki/Syntax)
 There are two examples:
 ```JS
- Person.find({ where: { name: { regexp: '^C+.*' } } });
+ Person.query({ where: { name: { regexp: '^C+.*' } } });
 ```
 ```JS
- Person.find({ where: { name: { regexp: /^C+.*/ } } });
+ Person.query({ where: { name: { regexp: /^C+.*/ } } });
 ```
 
 - SQL injection: The n1ql is generated via concatenating the string. But the parameters do not include in the query. The parameters will be escaped by CouchBase itself. For the reason, it's free from SQL injection.
