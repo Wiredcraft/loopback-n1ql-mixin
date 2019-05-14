@@ -31,7 +31,7 @@ describe('N1QL Array function array_contains test', () => {
     await Ds.autoupdate();
     await Book.create({ name: 'name', title: 'title', tags: ['sci-fi', 'war'] });
     await Book.create({ name: 'name2', title: 'title2', tags: [{ name: 'sci-fi' }, { name: 'war' }] });
-    await wait(200);
+    await wait(300); // Couchbase have a read delay. We have to waiting for couchbase updated index
   });
   after('Clear', async() => {
     await Book.destroyAll();
