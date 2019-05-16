@@ -30,10 +30,12 @@ describe('N1ql test', () => {
       extra_author_index: { 'extra.author.name': 1 } } }
   );
   Book.app = app;
+  let book1;
+  let book2;
   before('Prepare', async() => {
     await Ds.autoupdate();
-    await Book.create({ name: 'name', title: 'title', extra: { author: { name: 'foo' } } });
-    await Book.create({ name: 'name2', title: 'title2', extra: { author: { name: 'bar' } } });
+    book1 = await Book.create({ name: 'name', title: 'title', extra: { author: { name: 'foo' } } });
+    book2 = await Book.create({ name: 'name2', title: 'title2', extra: { author: { name: 'bar' } } });
     await wait(200);
   });
   after('Clear', async() => {
@@ -59,6 +61,12 @@ describe('N1ql test', () => {
       const books = await Book.query({ where: { 'extra.author.name': 'foo' } });
       expect(books.length).to.be.eql(1);
       expect(books[0].name).to.be.eql('name');
+    });
+
+    it('should support query by id', async() => {
+      const books = await Book.query({ where: { id: book1.id } });
+      expect(books.length).to.be.eql(1);
+      expect(books[0].name).to.be.eql(book1.name);
     });
   });
 
