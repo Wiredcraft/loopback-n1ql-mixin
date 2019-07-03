@@ -1,4 +1,7 @@
 # loopback-n1ql-mixin
+
+[![NPM](https://nodei.co/npm/loopback-n1ql-mixin.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/loopback-n1ql-mixin/)
+
 Loopback Couchbase N1QL mixin
 
 
@@ -56,6 +59,12 @@ Add `N1ql` into model config as following:
 
 ```
 
+### Index
+
+The mixin support create the [primary index](https://docs.couchbase.com/server/current/n1ql/n1ql-language-reference/createprimaryindex.html) and specifc index that is defined in [model definition json](https://loopback.io/doc/en/lb3/Model-definition-JSON-file.html#indexes).
+
+
+**Warning**: Indexes will not be automatically created or updated for you. You must run `autoupdate` to create/update indexes!
 
 
 ### Usage
