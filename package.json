@@ -1,6 +1,6 @@
 {
   "name": "loopback-n1ql-mixin",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "A mixin to enable use n1ql(couchbase)",
   "main": "index.js",
   "scripts": {
@@ -29,7 +29,7 @@
   ],
   "author": {
     "name": "Wiredcraft",
-    "email": "",
+    "email": "ray@wiredcraft.com",
     "url": "https://wiredcraft.com/"
   },
   "contributors": [

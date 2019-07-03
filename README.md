@@ -6,7 +6,7 @@ Loopback Couchbase N1QL mixin
 ### Install
 
 ```sh
-yarn add  https://github.com/Wiredcraft/loopback-n1ql-mixin#v1.0.0
+yarn add  loopback-n1ql-mixin
 ```
 
 
@@ -28,7 +28,7 @@ Modify `server/model-config.json` as following:
     ],
     "mixins": [
       "loopback/common/mixins",
-      "../node_modules/loopback-n1ql-mixin",
+      "../node_modules/loopback-n1ql-mixin/lib",
       "../common/mixins"
     ]
   }
