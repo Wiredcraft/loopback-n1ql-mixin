@@ -63,6 +63,30 @@ Add `N1ql` into model config as following:
 
 The mixin support create the [primary index](https://docs.couchbase.com/server/current/n1ql/n1ql-language-reference/createprimaryindex.html) and specifc index that is defined in [model definition json](https://loopback.io/doc/en/lb3/Model-definition-JSON-file.html#indexes).
 
+A example:
+
+```json
+{
+  "name": "Example",
+  "base": "PersistedModel",
+  "mixins": {
+    "N1ql": true
+  },
+  "indexes": {
+    "status_type": {
+        "type": 1,
+        "_type": 1,
+        "status": 1,
+        "createdAt": 1
+    },
+  },
+  "properties": {},
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}
+```
 
 **Warning**: Indexes will not be automatically created or updated for you. You must run `autoupdate` to create/update indexes!
 
