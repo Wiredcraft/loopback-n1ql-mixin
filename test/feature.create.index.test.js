@@ -27,7 +27,7 @@ describe('Create Index test', () => {
       name: String, type: String,
       type: String, type: String,
       extra: Object, type: Object
-    }, { mixins: { 'N1ql': true }, indexes: { source_index: { 'source': 1 } } });
+    }, { mixins: { 'N1ql': true }, indexes: { source_index: { keys: { 'source': 1 } } } });
     try {
       await Ds2.autoupdate();
     } catch (err) {

@@ -74,10 +74,12 @@ A example:
   },
   "indexes": {
     "status_type": {
-        "type": 1,
-        "_type": 1,
-        "status": 1,
-        "createdAt": 1
+        "keys": {
+          "type": 1,
+          "_type": 1,
+          "status": 1,
+          "createdAt": 1
+        }
     },
   },
   "properties": {},
