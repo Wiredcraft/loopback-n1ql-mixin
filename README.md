@@ -2,6 +2,8 @@
 
 [![NPM](https://nodei.co/npm/loopback-n1ql-mixin.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/loopback-n1ql-mixin/)
 
+[![Build Status](https://travis-ci.com/Wiredcraft/loopback-n1ql-mixin.svg?branch=master)](https://travis-ci.com/Wiredcraft/loopback-n1ql-mixin)
+
 Loopback Couchbase N1QL mixin
 
 
