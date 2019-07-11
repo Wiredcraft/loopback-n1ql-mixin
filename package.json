@@ -1,6 +1,6 @@
 {
   "name": "loopback-n1ql-mixin",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A mixin to enable use n1ql(couchbase)",
   "main": "index.js",
   "scripts": {
@@ -56,8 +56,11 @@
     "nyc": "^13.1.0"
   },
   "dependencies": {
-    "couchbase": "^2.6.3",
+    "couchbase": "^2.6.4",
     "http-errors": "^1.7.2",
     "loopback-connector-couchbase5": "^0.0.2"
+  },
+  "resolutions": {
+    "loopback-connector-couchbase5/**/couchbase": "^2.6.4"
   }
 }
