@@ -59,5 +59,8 @@
     "couchbase": "^2.6.4",
     "http-errors": "^1.7.2",
     "loopback-connector-couchbase5": "^0.0.2"
+  },
+  "resolutions": {
+    "loopback-connector-couchbase5/**/couchbase": "^2.6.4"
   }
 }
