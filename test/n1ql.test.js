@@ -31,11 +31,10 @@ describe('N1ql test', () => {
   );
   Book.app = app;
   let book1;
-  let book2;
   before('Prepare', async() => {
     await Ds.autoupdate();
     book1 = await Book.create({ name: 'name', title: 'title', extra: { author: { name: 'foo' } } });
-    book2 = await Book.create({ name: 'name2', title: 'title2', extra: { author: { name: 'bar' } } });
+    await Book.create({ name: 'name2', title: 'title2', extra: { author: { name: 'bar' } } });
     await wait(200);
   });
   after('Clear', async() => {
