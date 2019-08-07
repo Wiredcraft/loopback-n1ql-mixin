@@ -10,7 +10,7 @@ describe('Issue#12 Test', () => {
   const Ds = app.dataSource(
     'couchbase5', {
       cluster: {
-        url: 'couchbase://localhost',
+        url: 'localhost',
         username: 'Administrator',
         password: 'password',
         options: {}
@@ -25,7 +25,7 @@ describe('Issue#12 Test', () => {
     name: String, type: String,
     title: String, type: String,
     tags: Array, type: Array
-  }, { mixins: { 'N1ql': true } });
+  }, { mixins: { 'N1ql': { primary: true } } });
   Book.app = app;
   before('Prepare', async() => {
     await Ds.autoupdate();

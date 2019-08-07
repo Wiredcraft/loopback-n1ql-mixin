@@ -10,7 +10,7 @@ describe('N1ql test', () => {
   const Ds = app.dataSource(
     'couchbase5', {
       cluster: {
-        url: 'couchbase://localhost',
+        url: 'localhost',
         username: 'Administrator',
         password: 'password',
         options: {}
@@ -25,7 +25,7 @@ describe('N1ql test', () => {
     name: String, type: String,
     title: String, type: String,
     extra: Object, type: Object
-  }, { mixins: { 'N1ql': true }, indexes:
+  }, { mixins: { 'N1ql': { primary: true } }, indexes:
     { name_index: { 'name': 1 },
       extra_author_index: { 'extra.author.name': 1 } } }
   );
@@ -41,14 +41,6 @@ describe('N1ql test', () => {
     await Book.destroyAll();
   });
 
-  describe('index', () => {
-    it('should contains name index', async() => {
-      const indexes = (await Book.getConnector()
-        .manager()
-        .call('getIndexesAsync')).map(i => i.name);
-      expect(indexes).to.be.eql(['Book', 'extra_author_index', 'name_index']);
-    });
-  });
   describe('query method', () => {
     it('should support single eql query', async() => {
       const books = await Book.query({ where: { name: 'name' } });
