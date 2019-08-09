@@ -109,7 +109,7 @@ A example:
 - #### Count
 
   ```js
-  const total = await Book.count({ where: { name: { like: '%For%' } }});
+  const total = await Book.sum({ where: { name: { like: '%For%' } }});
   assert total === 10;
   ```
 
