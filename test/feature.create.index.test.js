@@ -11,9 +11,8 @@ describe('Create Index test', () => {
     let error;
     const Ds2 = app.dataSource(
       'couchbase5', {
-        name: 'test',
         cluster: {
-          url: 'couchbase://localhost',
+          url: 'localhost',
           username: 'test',
           password: 'testpass',
           options: {}

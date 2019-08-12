@@ -49,7 +49,6 @@
     "eslint": "^5.15.3",
     "eslint-config-wcl-backend": "^0.3.0",
     "istanbul": "^1.1.0-alpha.1",
-    "couchbase": "^2.6.3",
     "loopback": "^3.22.0",
     "loopback-connector": "^4.4.0",
     "loopback-datasource-juggler": "^3.23.0",

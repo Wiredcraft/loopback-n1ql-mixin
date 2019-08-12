@@ -72,7 +72,11 @@ A example:
   "name": "Example",
   "base": "PersistedModel",
   "mixins": {
-    "N1ql": true
+    "N1ql": {
+      "primary": false,
+      "drop": false,
+      "deferred": true  
+    }
   },
   "indexes": {
     "status_type": {
@@ -94,7 +98,23 @@ A example:
 
 **Warning**: Indexes will not be automatically created or updated for you. You must run `autoupdate` to create/update indexes!
 
+### Options
 
+- `primary`: Create primary index, default: false. 
+  
+  > <em>**Avoid Primary Keys in Production** 
+  — [CouchBase Index Best Practices](https://blog.couchbase.com/indexing-best-practices/)</em>
+  
+- `drop`: Drop old same name index, default: false. 
+  If drop is false, the autoupdate will **never** update the index even you have changed the index fields
+ 
+- `deferred`: Create index or primary index in defer queue.
+
+  > With defer_build set to TRUE, then the CREATE INDEX operation queues the task for building the index but immediately pauses the building of the index of type GSI. Index building requires an expensive scan operation. Deferring building of the index with multiple indexes can optimize the expensive scan operation. Admins can defer building multiple indexes and, using the BUILD INDEX statement, multiple indexes to be built efficiently with one efficient scan of bucket data.
+  
+  **An known issue:** The index may keep in `created` status without any progress. You have to execute [build index](https://docs.couchbase.com/server/current/n1ql/n1ql-language-reference/build-index.html) to kick off the building process.
+  
+  
 ### Usage
 
 - #### Query
@@ -152,3 +172,8 @@ There are two examples:
 ```
 
 - SQL injection: The n1ql is generated via concatenating the string. But the parameters do not include in the query. The parameters will be escaped by CouchBase itself. For the reason, it's free from SQL injection.
+
+
+- Only `ready` status index can be used.
+
+
