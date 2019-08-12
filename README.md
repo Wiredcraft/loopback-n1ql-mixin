@@ -133,6 +133,15 @@ A example:
   assert total === 10;
   ```
 
+- #### Query Options
+
+  - Force to use dedicated index
+    In [some scenarios]() you may need to specifc a index to fulfill your query.
+    ```js
+    const books = await Book.query({ where: { name: { like: '%For%' } }}, { index: 'name_createdAt_index'});
+    assert books[0].name === 'For bar';
+    ```
+
 
 
 ### Support Query
@@ -160,7 +169,11 @@ REST API | ✔️
 SQL Inject | Safe * 
 
 
+### >>[FAQ](https://github.com/Wiredcraft/loopback-n1ql-mixin/wiki/FAQ) <<
+Check out FAQ when you meet any issue.
+
 #### Notes:
+
 
 - Regexp: The CouchBase use Golang to implement the pattern matching.  [Supported Syntax](https://github.com/google/re2/wiki/Syntax)
 There are two examples:

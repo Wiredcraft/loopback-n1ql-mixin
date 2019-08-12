@@ -4,7 +4,7 @@ const loopback = require('loopback');
 const N1ql = require('../lib/n1ql');
 const expect = require('chai').expect;
 const app = loopback();
-describe('N1ql test', () => {
+describe('N1ql query option', () => {
   const Ds = app.dataSource(
     'couchbase5', {
       cluster: {
@@ -28,10 +28,9 @@ describe('N1ql test', () => {
       extra_author_index: { 'extra.author.name': 1 } } }
   );
   Book.app = app;
-  let book1;
   before('Prepare', async() => {
     await Ds.autoupdate();
-    book1 = await Book.create({ name: 'name', title: 'title', extra: { author: { name: 'foo' } } });
+    await Book.create({ name: 'name', title: 'title', extra: { author: { name: 'foo' } } });
     await Book.create({ name: 'name2', title: 'title2', extra: { author: { name: 'bar' } } });
     let count = 0;
     while (count === 0) {
@@ -43,39 +42,39 @@ describe('N1ql test', () => {
   });
 
   describe('query method', () => {
-    it('should support single eql query', async() => {
-      const books = await Book.query({ where: { name: 'name' } });
+    it('should choose index', async() => {
+      const books = await Book.query(
+        { where: { name: 'name' } }, { index: 'name_index' });
       expect(books.length).to.be.eql(1);
       expect(books[0].name).to.be.eql('name');
     });
-
-    it('should support empty query', async() => {
-      const books = await Book.query({ where: {} });
-      expect(books.length).to.be.eql(2);
-    });
-
-    it('should support nested document query', async() => {
-      const books = await Book.query({ where: { 'extra.author.name': 'foo' } });
-      expect(books.length).to.be.eql(1);
-      expect(books[0].name).to.be.eql('name');
-    });
-
-    it('should support query by id', async() => {
-      const books = await Book.query({ where: { id: book1.id } });
-      expect(books.length).to.be.eql(1);
-      expect(books[0].name).to.be.eql(book1.name);
+    it('should throw a error when index not found', async() => {
+      let error;
+      try {
+        await Book.query(
+          { where: { name: 'name' } }, { index: 'name_index2' });
+      } catch (err) {
+        error = err;
+      }
+      expect(error.message).to.be.eql('GSI index name_index2 not found.');
     });
   });
 
   describe('count method', () => {
-    it('should support single eql query', async() => {
-      const books = await Book.sum({ where: { name: 'name' } });
-      expect(books).to.be.eql(1);
+    it('should choose index', async() => {
+      const total = await Book.sum({ where: { name: 'name' } }, { index: 'name_index' });
+      expect(total).to.be.eql(1);
     });
 
-    it('should support nested document query', async() => {
-      const books = await Book.sum({ where: { 'extra.author.name': 'foo' } });
-      expect(books).to.be.eql(1);
+    it('should throw a error when index not found', async() => {
+      let error;
+      try {
+        await Book.sum(
+          { where: { name: 'name' } }, { index: 'name_index2' });
+      } catch (err) {
+        error = err;
+      }
+      expect(error.message).to.be.eql('GSI index name_index2 not found.');
     });
   });
 });
