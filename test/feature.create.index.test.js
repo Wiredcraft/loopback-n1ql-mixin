@@ -7,7 +7,65 @@ global.Promise = require('bluebird');
 const app = loopback();
 app.logger = console;
 describe('Create Index test', () => {
-  it('should be failed when add a index for an undefined field', async() => {
+  it('should be success when you index at document id', async() => {
+    const Ds = app.dataSource(
+      'couchbase5', {
+        cluster: {
+          url: 'localhost',
+          username: 'Administrator',
+          password: 'password',
+          options: {}
+        },
+        bucket: {
+          name: 'test_bucket',
+          operationTimeout: 60 * 1000
+        }
+      });
+    Ds.createModel('Book', {
+      name: String, type: String,
+      title: String, type: String,
+      extra: Object, type: Object
+    }, { mixins: { 'N1ql': { primary: true, deferred: false, drop: true } }, indexes:
+      { name_test_index: { 'name': -1, 'id': -1 } } }
+    );
+    let error;
+    try {
+      await Ds.autoupdate();
+    } catch (err) {
+      error = err;
+    }
+    expect(error).to.be.undefined;
+  });
+  it('should be success when use true as options', async() => {
+    const Ds = app.dataSource(
+      'couchbase5', {
+        cluster: {
+          url: 'localhost',
+          username: 'Administrator',
+          password: 'password',
+          options: {}
+        },
+        bucket: {
+          name: 'test_bucket',
+          operationTimeout: 60 * 1000
+        }
+      });
+    Ds.createModel('Book', {
+      name: String, type: String,
+      title: String, type: String,
+      extra: Object, type: Object
+    }, { mixins: { 'N1ql': true }, indexes:
+      { name_test_index: { 'name': -1, 'id': -1 } } }
+    );
+    let error;
+    try {
+      await Ds.autoupdate();
+    } catch (err) {
+      error = err;
+    }
+    expect(error).to.be.undefined;
+  });
+  it('should be failed when add a index for without correct RABC role/permission', async() => {
     let error;
     const Ds2 = app.dataSource(
       'couchbase5', {
