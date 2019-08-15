@@ -36,6 +36,35 @@ describe('Create Index test', () => {
     }
     expect(error).to.be.undefined;
   });
+  it('should be success when use true as options', async() => {
+    const Ds = app.dataSource(
+      'couchbase5', {
+        cluster: {
+          url: 'localhost',
+          username: 'Administrator',
+          password: 'password',
+          options: {}
+        },
+        bucket: {
+          name: 'test_bucket',
+          operationTimeout: 60 * 1000
+        }
+      });
+    Ds.createModel('Book', {
+      name: String, type: String,
+      title: String, type: String,
+      extra: Object, type: Object
+    }, { mixins: { 'N1ql': true }, indexes:
+      { name_test_index: { 'name': -1, 'id': -1 } } }
+    );
+    let error;
+    try {
+      await Ds.autoupdate();
+    } catch (err) {
+      error = err;
+    }
+    expect(error).to.be.undefined;
+  });
   it('should be failed when add a index for without correct RABC role/permission', async() => {
     let error;
     const Ds2 = app.dataSource(
