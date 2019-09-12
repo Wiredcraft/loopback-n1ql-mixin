@@ -4,6 +4,7 @@ const loopback = require('loopback');
 const N1ql = require('../lib/n1ql');
 const expect = require('chai').expect;
 const app = loopback();
+const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
 describe('N1ql test', () => {
   const Ds = app.dataSource(
     'couchbase5', {
@@ -36,6 +37,7 @@ describe('N1ql test', () => {
     let count = 0;
     while (count === 0) {
       count = await Book.sum();
+      await wait(200);
     }
   });
   after('Clear', async() => {
