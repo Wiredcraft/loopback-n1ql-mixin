@@ -30,7 +30,7 @@ describe('Square bracket escape test', () => {
   before('Prepare', async() => {
     await Ds.autoupdate();
     await Book.create({ user: 'name', title: 'title', tags: ['sci-fi', 'war'] });
-    await Book.create({ user: 'name2', title: 'title2', tags: [{ name: 'sci-fi' }, { name: 'war' }] });
+    await Book.create({ user: 'name2', title: 'title2', tags: [{ name: 'tragedy' }, { name: 'war' }] });
     let count = 0;
     while (count === 0) {
       count = await Book.sum();
@@ -41,10 +41,16 @@ describe('Square bracket escape test', () => {
     await Book.destroyAll();
   });
   describe('query method', () => {
-    it('should support inq query', async() => {
+    it('should support access array type query', async() => {
       const books = await Book.query({ where: { 'tags[0]': 'sci-fi' }, order: ['user ASC'] });
       expect(books.length).to.be.eql(1);
       expect(books[0].user).to.be.eql('name');
+    });
+
+    it('should support access array type query II ', async() => {
+      const books = await Book.query({ where: { 'tags[0].name': 'tragedy' }, order: ['user ASC'] });
+      expect(books.length).to.be.eql(1);
+      expect(books[0].user).to.be.eql('name2');
     });
 
     it('should return empty result', async() => {
