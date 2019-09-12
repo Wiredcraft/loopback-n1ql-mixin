@@ -1,7 +1,7 @@
 {
   "name": "loopback-n1ql-mixin",
-  "version": "1.0.3",
-  "description": "A mixin to enable use n1ql(couchbase)",
+  "version": "1.0.4",
+  "description": "A mixin to use n1ql(couchbase) via loopback filter",
   "main": "index.js",
   "scripts": {
     "lint": "eslint .",
@@ -12,7 +12,6 @@
     "start-dev": "make start-dev",
     "start-staging": "make start-staging",
     "commitmsg": "commitlint -e $GIT_PARAMS",
-    "version": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0 && git add CHANGELOG.md",
     "precommit": "make lint",
     "prepush": "make lint"
   },
