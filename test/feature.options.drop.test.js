@@ -40,7 +40,7 @@ describe('Index Option Drop test', () => {
     const indexes = await Department.rawQuery('select * from system:indexes where name = "dep_name"');
     expect(indexes.length).to.be.eql(1);
     const index = indexes[0];
-    expect(index.indexes.index_key).to.be.eqls(['`name`', '`_type`']);
+    expect(index.indexes.index_key).to.be.eqls(['`name`']);
   });
 
   it('should not drop old primary index', async() => {
