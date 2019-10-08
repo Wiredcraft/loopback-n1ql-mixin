@@ -168,6 +168,35 @@ Node API | ✔️
 REST API | ✔️
 SQL Inject | Safe * 
 
+### Extra Filter
+
+#### xlike
+
+Base on this [post](https://dzone.com/articles/a-couchbase-index-technique-for-like-predicates-wi) implemented a fuzzy search filter on text field.
+
+First of all, you need to create a xlike index as follows:
+```json
+{
+ "indexes": {
+    "status_type": {
+        "keys": {
+          "title": "xlike"
+        }
+    },
+  }
+}
+```
+
+Then enjoy the xlike as follows:
+```js
+Book.query({
+  where: {
+    title: {
+      xlike: 'galaxy'
+    }
+  }
+})
+```
 
 ### >>[FAQ](https://github.com/Wiredcraft/loopback-n1ql-mixin/wiki/FAQ) <<
 Check out FAQ when you meet any issue.
