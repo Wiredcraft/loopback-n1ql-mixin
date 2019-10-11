@@ -55,7 +55,7 @@ describe('Xlike test', () => {
         .rawQuery('select * from system:indexes where name = "title_index"');
       expect(indexes.length).to.be.eql(1);
       expect(indexes[0].indexes.index_key).to.be.eqls([
-        '(distinct (array `elem` for `elem` in suffixes(lower(`title`)) end))',
+        '(distinct (array `elem` for `elem` in suffixes(lower((`test_bucket`.`title`))) end))',
         '`user` DESC'
       ]);
     });
