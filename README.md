@@ -170,6 +170,33 @@ SQL Inject | Safe *
 
 ### Extra Filter
 
+#### Any filter
+
+Couchbase Support a nested document. There will be a case, when the document looks like as follows:
+```js
+{
+  "type": "book",
+  "name": "Galaxy Express 999",
+  "tags": [{
+    "name": "sf",
+     "id": 001
+  }, {
+    "name": "galaxy",
+    "id": 991
+  }]
+}
+```
+
+You have to use `any filter` to access the document. The filter will be like as follows:
+
+```js
+Book.query({
+  where: {
+    "tags.*.id": "001"
+  }
+})
+```
+
 #### xlike
 
 Base on this [post](https://dzone.com/articles/a-couchbase-index-technique-for-like-predicates-wi) implemented a fuzzy search filter on text field.

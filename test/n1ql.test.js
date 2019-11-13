@@ -43,7 +43,15 @@ describe('N1ql test', () => {
   after('Clear', async() => {
     await Book.destroyAll();
   });
-
+  describe('filter object modified issue', () => {
+    it('should not modify the filter', async() => {
+      const filter = { where: { and: [{ 'extra.author.name': 'foo' }] } };
+      let books = await Book.query(filter);
+      expect(books.length).to.be.eql(1);
+      books = await Book.query(filter);
+      expect(books.length).to.be.eql(1);
+    });
+  });
   describe('query method', () => {
     it('should support single eql query', async() => {
       const books = await Book.query({ where: { name: 'name' } });
