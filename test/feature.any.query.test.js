@@ -25,7 +25,7 @@ describe('N1ql Any query test', () => {
     title: String, type: String,
     authors: Array, type: Array
   }, { mixins: { 'N1ql': { primary: true, deferred: false } }, indexes:
-    { name_index: { 'name': 1 } }
+    { name_index: { 'authors.*.name': 1 } }
   });
   Book.app = app;
   before('Prepare', async() => {
