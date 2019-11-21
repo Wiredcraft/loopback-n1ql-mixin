@@ -170,6 +170,27 @@ SQL Inject | Safe *
 
 ### Extra Filter
 
+#### array contains filter
+
+You may need a specific array filter for the array fields as follows:
+```js
+{
+  "type": "shoes",
+  "materials": [ 991, 100]
+}
+```
+
+You can use such a filter to find shoes who has `100` materials as follows:
+
+```js
+Shoes.query({
+  where: {
+    "materials": {
+      "array_contains": 100
+    }
+  }
+})
+```
 #### Any filter
 
 Couchbase Support a nested document. There will be a case, when the document looks like as follows:
