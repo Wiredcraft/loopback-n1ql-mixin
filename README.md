@@ -261,7 +261,9 @@ There are two examples:
  Person.query({ where: { name: { regexp: /^C+.*/ } } });
 ```
 
-- SQL injection: The n1ql is generated via concatenating the string. But the parameters do not include in the query. The parameters will be escaped by CouchBase itself. For the reason, it's free from SQL injection.
+- ~SQL injection: The n1ql is generated via concatenating the string. But the parameters do not include in the query. The parameters will be escaped by CouchBase itself. For the reason, it's free from SQL injection.~
+Before 1.1.2, this lib was using [named parameters for query](https://docs.couchbase.com/server/6.0/n1ql/n1ql-rest-api/exnamed.html), which we've observed significant impact on the query execute response time, thus it will be dropped in future version.
+To prevent n1ql injection, we are following the guidelines in https://blog.couchbase.com/couchbase-and-n1ql-security-centeredgesoftware/
 
 
 - Only `ready` status index can be used.
